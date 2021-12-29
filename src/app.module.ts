@@ -1,12 +1,20 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ScheduleModule } from '@nestjs/schedule';
 import { NotificationsModule } from './notifications/notifications.module';
+import { ApiModule, Configuration } from './tabt-client';
+import { ConfigModule } from '@nestjs/config';
+import { FirebaseModule } from './firebase/firebase.module';
 
 @Module({
-  imports: [ScheduleModule.forRoot(), NotificationsModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ScheduleModule.forRoot(),
+    ConfigModule.forRoot(),
+    ApiModule.forRoot(
+      () => new Configuration({ basePath: 'https://tabt-rest.floca.be' }),
+    ),
+    NotificationsModule,
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
