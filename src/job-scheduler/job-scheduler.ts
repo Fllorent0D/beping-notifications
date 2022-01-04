@@ -1,9 +1,20 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { EventBusService } from '../common/event-bus/event-bus.service';
 import { TabtMatchResultUpdatesScrapperService } from '../notifications/tabt-match-result-updates-scrapper.service';
-import { Cron, CronExpression } from '@nestjs/schedule';
+import { Cron } from '@nestjs/schedule';
 import { TabtEventType } from '../common/event-bus/models/event.model';
 import { v4 as uuid } from 'uuid';
+
+/*
+		* * * * * *
+		| | | | | |
+		| | | | | day of week
+		| | | | month
+		| | | day of month
+		| | hour
+		| minute
+		second (optional)
+*/
 
 @Injectable()
 export class JobScheduler {
@@ -13,11 +24,18 @@ export class JobScheduler {
 							private readonly newsScrapper: TabtMatchResultUpdatesScrapperService) {
 	}
 
-	@Cron(CronExpression.EVERY_2_HOURS)
+	@Cron('0 */2 * * 1-5')
 	async weekSchedule() {
 		this.logger.log('Week job: Running');
 		await this.refreshMatchResultUpdates();
 		this.logger.log('Week job: Finished');
+	}
+
+	@Cron('0 * * * 6,7')
+	async weekendSchedule() {
+		this.logger.log('Weekend job: Running');
+		await this.refreshMatchResultUpdates();
+		this.logger.log('Weekend job: Finished');
 	}
 
 	async refreshMatchResultUpdates(): Promise<void> {
@@ -25,9 +43,9 @@ export class JobScheduler {
 		this.eventBus.emitEvent({
 			type: TabtEventType.MATCH_RESULT_UPDATE,
 			payload: {
-				latestUpdates: news
+				latestUpdates: news,
 			},
-			corrId: uuid()
+			corrId: uuid(),
 		});
 	}
 
