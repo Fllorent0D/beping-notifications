@@ -1,12 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { BepingNotifierService } from './notifications/services/beping-notifier.service';
+import { BepingNotifierService } from './notifications/beping-notifier.service';
+import { Logger } from 'nestjs-pino';
+import { JobScheduler } from './job-scheduler/job-scheduler';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
-  const notifier = app.get(BepingNotifierService);
-  notifier.start();
+	const app = await NestFactory.create(AppModule, { bufferLogs: true });
+	app.useLogger(app.get(Logger));
+
+	await app.listen(3000);
+
+	app.get(BepingNotifierService).start();
+	await app.get(JobScheduler).refreshMatchResultUpdates();
 }
 
 bootstrap();

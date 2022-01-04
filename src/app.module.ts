@@ -1,20 +1,28 @@
 import { Module } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
-import { NotificationsModule } from './notifications/notifications.module';
-import { ApiModule, Configuration } from './tabt-client';
+import { ApiModule, Configuration } from './common/tabt-client';
 import { ConfigModule } from '@nestjs/config';
-import { FirebaseModule } from './firebase/firebase.module';
+import { LoggerModule } from 'nestjs-pino';
+import { JobSchedulerModule } from './job-scheduler/job-scheduler.module';
 
 @Module({
-  imports: [
-    ScheduleModule.forRoot(),
-    ConfigModule.forRoot(),
-    ApiModule.forRoot(
-      () => new Configuration({ basePath: 'https://tabt-rest.floca.be' }),
-    ),
-    NotificationsModule,
-  ],
-  controllers: [],
-  providers: [],
+	imports: [
+		ScheduleModule.forRoot(),
+		LoggerModule.forRoot({
+			pinoHttp: {
+				prettyPrint: {
+					translateTime: true,
+					ignore: 'pid,hostname',
+					singleLine: true,
+				},
+			},
+		}),
+		ConfigModule.forRoot(),
+		ApiModule.forRoot(() => new Configuration({ basePath: 'https://tabt-rest.floca.be' })),
+		JobSchedulerModule,
+	],
+	controllers: [],
+	providers: [],
 })
-export class AppModule {}
+export class AppModule {
+}

@@ -19,7 +19,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "tabt-generate": "openapi-generator-cli generate -i https://tabt-rest.floca.be/doc-json --generator-name typescript-nestjs -o ./src/tabt-client"
+    "tabt-generate": "openapi-generator-cli generate -i https://tabt-rest.floca.be/doc-json --generator-name typescript-nestjs -o src/common/tabt-client"
   },
   "dependencies": {
     "@nestjs/axios": "^0.0.3",
@@ -28,11 +28,16 @@
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/schedule": "^1.0.2",
+    "cache-manager": "^3.6.0",
     "cache-manager-redis-store": "^2.0.0",
     "firebase-admin": "^10.0.1",
+    "nestjs-pino": "^2.4.0",
+    "pino-http": "^6.5.0",
+    "pino-pretty": "^7.3.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
+    "uuid": "^8.3.2",
     "xmldom": "^0.6.0"
   },
   "devDependencies": {
