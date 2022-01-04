@@ -1,0 +1,10 @@
+{
+  "apps" : [{
+    "name"        : "beping-notifications",
+    "script"      : "./dist/main.js",
+    "exec_mode"   : "fork",
+    "env_production": {
+      "NODE_ENV": "prod"
+    }
+  }]
+}
