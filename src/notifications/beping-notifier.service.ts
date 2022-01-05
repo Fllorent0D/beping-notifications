@@ -28,10 +28,10 @@ export class BepingNotifierService {
 			.ofTypes<LatestMatchUpdatePayload>(TabtEventType.MATCH_RESULT_UPDATE)
 			.pipe(map((event) => event.payload),
 				distinctUntilChanged((a: LatestMatchUpdatePayload, b: LatestMatchUpdatePayload) =>
-					a.latestUpdates.length === b.latestUpdates.length &&
+					a?.latestUpdates?.length === b?.latestUpdates?.length &&
 					a.latestUpdates.every((item: MatchResultUpdate, index: number) =>
-						item.matchUniqueId === b[index].matchUniqueId &&
-						item.updateTime === b[index].updateTime)))
+						item.matchUniqueId === b?.[index]?.matchUniqueId &&
+						item.updateTime === b?.[index]?.updateTime)))
 			.subscribe(async (events: LatestMatchUpdatePayload) => {
 				for (const event of events.latestUpdates) {
 					try {
