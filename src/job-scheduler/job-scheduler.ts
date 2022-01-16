@@ -31,7 +31,16 @@ export class JobScheduler {
 		this.logger.log('Week job: Finished');
 	}
 
-	@Cron('0 * * * 6,7')
+	/*
+	@Cron('0 * * * * *')
+	async testSchedule() {
+		this.logger.log('Week job: Running');
+		await this.refreshMatchResultUpdates();
+		this.logger.log('Week job: Finished');
+	}
+	*/
+
+	@Cron('*/20 * * * 6,7')
 	async weekendSchedule() {
 		this.logger.log('Weekend job: Running');
 		await this.refreshMatchResultUpdates();
