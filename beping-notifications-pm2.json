@@ -4,7 +4,8 @@
     "script"      : "./dist/main.js",
     "exec_mode"   : "fork",
     "env_production": {
-      "NODE_ENV": "prod"
+      "NODE_ENV": "prod",
+      "PORT": 3005
     }
   }]
 }

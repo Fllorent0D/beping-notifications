@@ -8,7 +8,7 @@ async function bootstrap() {
 	const app = await NestFactory.create(AppModule, { bufferLogs: true });
 	app.useLogger(app.get(Logger));
 
-	await app.listen(3000);
+	await app.listen( process.env.PORT || 3000);
 
 	app.get(BepingNotifierService).start();
 	await app.get(JobScheduler).refreshMatchResultUpdates();

@@ -4,9 +4,12 @@ import { ApiModule, Configuration } from './common/tabt-client';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerModule } from 'nestjs-pino';
 import { JobSchedulerModule } from './job-scheduler/job-scheduler.module';
+import { TerminusModule } from '@nestjs/terminus';
+import { HealthController } from './controllers/health.controller';
 
 @Module({
 	imports: [
+		TerminusModule,
 		ScheduleModule.forRoot(),
 		LoggerModule.forRoot({
 			pinoHttp: {
@@ -21,7 +24,9 @@ import { JobSchedulerModule } from './job-scheduler/job-scheduler.module';
 		ApiModule.forRoot(() => new Configuration({ basePath: 'https://tabt-rest.floca.be' })),
 		JobSchedulerModule,
 	],
-	controllers: [],
+	controllers: [
+		HealthController
+	],
 	providers: [],
 })
 export class AppModule {
