@@ -14,7 +14,7 @@ export class MessagingFirebaseService {
 		try {
 			const isProd = this.configService.get<string>('NODE_ENV') === 'prod';
 			await admin.messaging().send(message, !isProd);
-			this.logger.log(`Push "${message.notification?.title}" sent to ${message.condition}`);
+			this.logger.debug(`Push "${message.notification?.title}" sent to ${message.condition}`);
 		} catch (e) {
 			this.logger.error(`Error when sending push to ${message.condition}`, e.stack,);
 		}

@@ -24,7 +24,7 @@ export class JobScheduler {
 							private readonly newsScrapper: TabtMatchResultUpdatesScrapperService) {
 	}
 
-	@Cron('0 */2 * * 1-5')
+	@Cron('0 * * * 1-5')
 	async weekSchedule() {
 		this.logger.log('Week job: Running');
 		await this.refreshMatchResultUpdates();
@@ -40,7 +40,7 @@ export class JobScheduler {
 	}
 	*/
 
-	@Cron('*/20 * * * 6,7')
+	@Cron('*/10 * * * 6,7')
 	async weekendSchedule() {
 		this.logger.log('Weekend job: Running');
 		await this.refreshMatchResultUpdates();

@@ -13,6 +13,7 @@ import { HealthController } from './controllers/health.controller';
 		ScheduleModule.forRoot(),
 		LoggerModule.forRoot({
 			pinoHttp: {
+				level: 'debug',
 				prettyPrint: {
 					translateTime: true,
 					ignore: 'pid,hostname',
@@ -25,7 +26,7 @@ import { HealthController } from './controllers/health.controller';
 		JobSchedulerModule,
 	],
 	controllers: [
-		HealthController
+		HealthController,
 	],
 	providers: [],
 })

@@ -33,11 +33,12 @@ export class BepingNotifierService {
 						item.matchUniqueId === b?.[index]?.matchUniqueId &&
 						item.updateTime === b?.[index]?.updateTime)))
 			.subscribe(async (events: LatestMatchUpdatePayload) => {
+				this.logger.log(events, 'Updates received')
 				for (const event of events.latestUpdates) {
 					try {
 						const alreadyTreated = await this.cacheService.getFromCache(`${event.matchUniqueId}:${event.updateTime}`);
 						if (alreadyTreated) {
-							this.logger.log(`Update ${event.matchUniqueId} ${event.updateTime} already treated. Skipping...`);
+							this.logger.debug(`Update ${event.matchUniqueId} ${event.updateTime} already treated. Skipping...`);
 							continue;
 						}
 						const { data: match }: AxiosResponse<TeamMatchesEntry> =
@@ -49,7 +50,7 @@ export class BepingNotifierService {
 							match.IsAwayWithdrawn ||
 							match.IsHomeWithdrawn
 						) {
-							this.logger.log(`Match ${event.matchUniqueId} is ff/fg. Adding to cache but will not sending notifications`);
+							this.logger.warn(`Match ${event.matchUniqueId} is ff/fg. Adding to cache but will not sending notifications`);
 							await this.cacheService.setInCache(
 								`${event.matchUniqueId}:${event.updateTime}`,
 								{ isFF: true },
