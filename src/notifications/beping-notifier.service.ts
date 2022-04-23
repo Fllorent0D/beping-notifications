@@ -67,7 +67,7 @@ export class BepingNotifierService {
 							continue;
 						}
 
-						if (match.Score) {
+						if (match.Score && match.IsValidated) {
 							this.logger.log(`Match ${event.matchUniqueId} has a score. Notifying...`);
 							const messageIds = await this.notifyMatch(match);
 							await this.matchNotificationRepository.insert({
@@ -76,6 +76,13 @@ export class BepingNotifierService {
 								messageIds: messageIds,
 								isForfait: false,
 								sent: true,
+							});
+						} else {
+							await this.matchNotificationRepository.insert({
+								matchUniqueId: event.matchUniqueId,
+								matchUpdateTime: event.updateTime,
+								isForfait: false,
+								sent: false,
 							});
 						}
 					} catch (err) {
