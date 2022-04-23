@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { JobScheduler } from '../job-scheduler/job-scheduler';
+import { JobScheduler } from './/job-scheduler';
 import { CommonModule } from '../common/common.module';
 import { NotificationsModule } from '../notifications/notifications.module';
 

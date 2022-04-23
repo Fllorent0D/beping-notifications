@@ -3,9 +3,11 @@ import { TabtMatchResultUpdatesScrapperService } from './tabt-match-result-updat
 import { HttpModule } from '@nestjs/axios';
 import { BepingNotifierService } from './beping-notifier.service';
 import { CommonModule } from '../common/common.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { MatchNotification } from '../model/notification.entity';
 
 @Module({
-	imports: [HttpModule, CommonModule],
+	imports: [HttpModule, CommonModule, TypeOrmModule.forFeature([MatchNotification])],
 	providers: [
 		TabtMatchResultUpdatesScrapperService,
 		BepingNotifierService,

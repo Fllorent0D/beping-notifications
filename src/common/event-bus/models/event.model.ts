@@ -1,6 +1,6 @@
 export interface MatchResultUpdate {
 	matchUniqueId: number;
-	updateTime: string;
+	updateTime: Date;
 }
 export interface LatestMatchUpdatePayload{
 	latestUpdates: MatchResultUpdate[];

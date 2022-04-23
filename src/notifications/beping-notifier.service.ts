@@ -1,11 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { EventBusService } from '../common/event-bus/event-bus.service';
 import { MessagingFirebaseService } from '../common/firebase/messaging-firebase.service';
-import { CacheService, TTL_DURATION } from '../common/cache/cache.service';
+import { CacheService } from '../common/cache/cache.service';
 import { LatestMatchUpdatePayload, MatchResultUpdate, TabtEventType } from '../common/event-bus/models/event.model';
 import { MatchesService, TeamMatchesEntry } from '../common/tabt-client';
 import { distinctUntilChanged, firstValueFrom, map } from 'rxjs';
 import { AxiosResponse } from 'axios';
+import { InjectRepository } from '@nestjs/typeorm';
+import { MatchNotification } from '../model/notification.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class BepingNotifierService {
@@ -15,6 +18,7 @@ export class BepingNotifierService {
 		private readonly tabtEventBusService: EventBusService,
 		private readonly messagingFirebaseService: MessagingFirebaseService,
 		private readonly cacheService: CacheService,
+		@InjectRepository(MatchNotification) private readonly matchNotificationRepository: Repository<MatchNotification>,
 		private readonly matchesService: MatchesService,
 	) {
 	}
@@ -33,11 +37,14 @@ export class BepingNotifierService {
 						item.matchUniqueId === b?.[index]?.matchUniqueId &&
 						item.updateTime === b?.[index]?.updateTime)))
 			.subscribe(async (events: LatestMatchUpdatePayload) => {
-				this.logger.log(events, 'Updates received')
+				this.logger.log(events, 'Updates received');
 				for (const event of events.latestUpdates) {
 					try {
-						const alreadyTreated = await this.cacheService.getFromCache(`${event.matchUniqueId}:${event.updateTime}`);
-						if (alreadyTreated) {
+						const findNotifications = await this.matchNotificationRepository.count({
+							matchUniqueId: event.matchUniqueId,
+							matchUpdateTime: event.updateTime,
+						});
+						if (findNotifications > 0) {
 							this.logger.debug(`Update ${event.matchUniqueId} ${event.updateTime} already treated. Skipping...`);
 							continue;
 						}
@@ -51,22 +58,25 @@ export class BepingNotifierService {
 							match.IsHomeWithdrawn
 						) {
 							this.logger.warn(`Match ${event.matchUniqueId} is ff/fg. Adding to cache but will not sending notifications`);
-							await this.cacheService.setInCache(
-								`${event.matchUniqueId}:${event.updateTime}`,
-								{ isFF: true },
-								TTL_DURATION.ONE_WEEK,
-							);
+							await this.matchNotificationRepository.insert({
+								matchUniqueId: event.matchUniqueId,
+								matchUpdateTime: event.updateTime,
+								isForfait: true,
+								sent: false,
+							});
 							continue;
 						}
 
 						if (match.Score) {
 							this.logger.log(`Match ${event.matchUniqueId} has a score. Notifying...`);
-							await this.notifyMatch(match);
-							await this.cacheService.setInCache(
-								`${event.matchUniqueId}:${event.updateTime}`,
-								{ sent: true },
-								TTL_DURATION.ONE_WEEK,
-							);
+							const messageIds = await this.notifyMatch(match);
+							await this.matchNotificationRepository.insert({
+								matchUniqueId: event.matchUniqueId,
+								matchUpdateTime: event.updateTime,
+								messageIds: messageIds,
+								isForfait: false,
+								sent: true,
+							});
 						}
 					} catch (err) {
 						this.logger.error(err.message, err.stack);
@@ -75,26 +85,26 @@ export class BepingNotifierService {
 			});
 	}
 
-	async notifyMatch(match: TeamMatchesEntry): Promise<void> {
-		await Promise.all([
-			this.messagingFirebaseService.sendPushNotification({
+	async notifyMatch(match: TeamMatchesEntry): Promise<string[]> {
+		return await this.messagingFirebaseService.sendPushNotifications([
+			{
 				notification: {
 					title: `${match.HomeTeam} - ${match.AwayTeam} (${match.Score}) match terminé`,
 				},
 				condition: `${this.topicConditionForMatch(match)} && 'lang-fr' in topics`,
-			}),
-			this.messagingFirebaseService.sendPushNotification({
+			},
+			{
 				notification: {
 					title: `${match.HomeTeam} - ${match.AwayTeam} (${match.Score}) game over`,
 				},
 				condition: `${this.topicConditionForMatch(match)} && 'lang-en' in topics`,
-			}),
-			this.messagingFirebaseService.sendPushNotification({
+			},
+			{
 				notification: {
 					title: `${match.HomeTeam} - ${match.AwayTeam} (${match.Score}) game over`,
 				},
 				condition: `${this.topicConditionForMatch(match)} && 'lang-nl' in topics`,
-			}),
+			},
 		]);
 	}
 
