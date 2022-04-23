@@ -42,7 +42,7 @@ import { MatchNotification } from './model/notification.entity';
 						migrationsDir: 'src/migration',
 					},
 					synchronize: true,
-					ssl: configService.get('NODE_ENV') === 'prod',
+					//ssl: configService.get('NODE_ENV') === 'prod',
 				};
 			},
 			inject: [ConfigService],

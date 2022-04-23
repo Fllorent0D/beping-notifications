@@ -40,7 +40,7 @@ export class JobScheduler {
 	}
 	*/
 
-	@Cron('*/10 * * * 6,7')
+	@Cron('*/5 * * * 6,7')
 	async weekendSchedule() {
 		this.logger.log('Weekend job: Running');
 		await this.refreshMatchResultUpdates();
