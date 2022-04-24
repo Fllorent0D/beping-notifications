@@ -54,26 +54,20 @@ export class JobScheduler {
 		this.logger.log('Weekend job: Finished');
 	}
 
-	@Cron('*/10 0-6 * * 7')
+	@Cron('*/10 0-6 * * 0')
 	async SundayNightSchedule() {
 		this.logger.log('Weekend job: Running');
 		await this.refreshMatchResultUpdates();
 		this.logger.log('Weekend job: Finished');
 	}
 
-	@Cron('*/5 7-13 * * 7')
+	@Cron('*/5 * * * 0')
 	async SundayMorningSchedule() {
 		this.logger.log('Weekend job: Running');
 		await this.refreshMatchResultUpdates();
 		this.logger.log('Weekend job: Finished');
 	}
 
-	@Cron('*/10 14-23 * * 7')
-	async SundayAfternoonSchedule() {
-		this.logger.log('Weekend job: Running');
-		await this.refreshMatchResultUpdates();
-		this.logger.log('Weekend job: Finished');
-	}
 	async refreshMatchResultUpdates(): Promise<void> {
 		const news = await this.newsScrapper.getLatestMatchResultUpdates();
 		this.eventBus.emitEvent({
