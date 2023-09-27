@@ -96,19 +96,19 @@ export class BepingNotifierService {
 		return await this.messagingFirebaseService.sendPushNotifications([
 			{
 				notification: {
-					title: `${match.HomeTeam} - ${match.AwayTeam} (${match.Score}) match terminé`,
+					body: `${match.HomeTeam} - ${match.AwayTeam} (${match.Score}) match terminé`,
 				},
 				condition: `${this.topicConditionForMatch(match)} && 'lang-fr' in topics`,
 			},
 			{
 				notification: {
-					title: `${match.HomeTeam} - ${match.AwayTeam} (${match.Score}) game over`,
+					body: `${match.HomeTeam} - ${match.AwayTeam} (${match.Score}) game over`,
 				},
 				condition: `${this.topicConditionForMatch(match)} && 'lang-en' in topics`,
 			},
 			{
 				notification: {
-					title: `${match.HomeTeam} - ${match.AwayTeam} (${match.Score}) game over`,
+					body: `${match.HomeTeam} - ${match.AwayTeam} (${match.Score}) game over`,
 				},
 				condition: `${this.topicConditionForMatch(match)} && 'lang-nl' in topics`,
 			},

@@ -18,11 +18,13 @@ model/address.ts
 model/clubEntry.ts
 model/divisionEntry.ts
 model/doubleTeam.ts
+model/head2HeadData.ts
 model/individualMatchResult.ts
 model/inlineResponse200.ts
 model/inlineResponse503.ts
 model/internalIdentifiersDTO.ts
 model/matchDetails.ts
+model/matchEntryHistory.ts
 model/matchSystemEntry.ts
 model/memberEntry.ts
 model/memberEntryResultEntry.ts
@@ -31,6 +33,7 @@ model/models.ts
 model/phone.ts
 model/player.ts
 model/players.ts
+model/playersInfo.ts
 model/rankingEntry.ts
 model/rankingEvaluationEntry.ts
 model/rankingPointsEntry.ts

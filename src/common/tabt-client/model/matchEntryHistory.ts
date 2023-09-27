@@ -9,18 +9,15 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { TeamMatchesEntry } from './teamMatchesEntry';
 
 
-export interface VenueEntry { 
-    Id: number;
-    ClubVenue: number;
-    Name: string;
-    Street: string;
-    Town: string;
-    Phone: string;
-    Comment: string;
-    Lat?: string;
-    Lon?: string;
-    BoundingBox?: Array<string>;
+export interface MatchEntryHistory { 
+    season?: number;
+    date: string;
+    matchEntry: TeamMatchesEntry;
+    playerRanking: string;
+    opponentRanking: string;
+    score: string;
 }
 

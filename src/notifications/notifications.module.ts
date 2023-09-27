@@ -1,18 +1,28 @@
-import { Module } from '@nestjs/common';
-import { TabtMatchResultUpdatesScrapperService } from './tabt-match-result-updates-scrapper.service';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 import { BepingNotifierService } from './beping-notifier.service';
 import { CommonModule } from '../common/common.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MatchNotification } from '../model/notification.entity';
+import { NumericRankingNotifierService } from './numeric-ranking-notifier.service';
+import { NumericRankingNotificationEntity } from '../model/numeric-ranking-notification.entity';
 
 @Module({
-	imports: [HttpModule, CommonModule, TypeOrmModule.forFeature([MatchNotification])],
+	imports: [
+		HttpModule,
+		CommonModule,
+		TypeOrmModule.forFeature([MatchNotification, NumericRankingNotificationEntity])],
 	providers: [
-		TabtMatchResultUpdatesScrapperService,
 		BepingNotifierService,
+		NumericRankingNotifierService,
 	],
-	exports: [TabtMatchResultUpdatesScrapperService],
 })
-export class NotificationsModule {
+export class NotificationsModule implements OnModuleInit {
+	constructor(private readonly numericRankingNotifierService: NumericRankingNotifierService) {
+	}
+
+	onModuleInit(): void {
+		this.numericRankingNotifierService.start();
+
+	}
 }

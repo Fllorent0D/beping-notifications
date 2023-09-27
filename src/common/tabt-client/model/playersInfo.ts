@@ -11,16 +11,10 @@
  */
 
 
-export interface VenueEntry { 
-    Id: number;
-    ClubVenue: number;
-    Name: string;
-    Street: string;
-    Town: string;
-    Phone: string;
-    Comment: string;
-    Lat?: string;
-    Lon?: string;
-    BoundingBox?: Array<string>;
+export interface PlayersInfo { 
+    playerUniqueIndex: number;
+    opponentPlayerUniqueIndex: number;
+    playerName: string;
+    opponentPlayerName: string;
 }
 
