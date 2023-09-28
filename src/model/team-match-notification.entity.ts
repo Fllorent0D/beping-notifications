@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class MatchNotification {
+export class TeamMatchNotificationEntity {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
@@ -9,13 +9,7 @@ export class MatchNotification {
 	createdAt: Date;
 
 	@Column()
-	matchUniqueId: number;
-
-	@CreateDateColumn({ type: 'timestamptz', nullable: false })
-	matchUpdateTime: Date;
-
-	@Column()
-	isForfait: boolean;
+	matchUniqueId: string;
 
 	@Column()
 	sent: boolean;

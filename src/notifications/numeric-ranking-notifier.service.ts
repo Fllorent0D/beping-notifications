@@ -76,15 +76,15 @@ export class NumericRankingNotifierService {
 		const random = Math.floor(Math.random() * 10);
 		if (event.newRanking > event.oldRanking) {
 			return {
-				fr: NOTIFICATIONS_FR.winning_points_notifications[random].replace('[X]', (event.newRanking - event.oldRanking).toString(10)),
-				en: NOTIFICATIONS_EN.winning_points_notifications[random].replace('[X]', (event.newRanking - event.oldRanking).toString(10)),
-				nl: NOTIFICATIONS_NL.winning_points_notifications[random].replace('[X]', (event.newRanking - event.oldRanking).toString(10)),
+				fr: NOTIFICATIONS_FR.winning_points[random].replace('[X]', (event.newRanking - event.oldRanking).toString(10)),
+				en: NOTIFICATIONS_EN.winning_points[random].replace('[X]', (event.newRanking - event.oldRanking).toString(10)),
+				nl: NOTIFICATIONS_NL.winning_points[random].replace('[X]', (event.newRanking - event.oldRanking).toString(10)),
 			};
 		} else {
 			return {
-				fr: NOTIFICATIONS_FR.losing_points_notifications[random].replace('[X]', (event.oldRanking - event.newRanking).toString(10)),
-				en: NOTIFICATIONS_EN.losing_points_notifications[random].replace('[X]', (event.oldRanking - event.newRanking).toString(10)),
-				nl: NOTIFICATIONS_NL.losing_points_notifications[random].replace('[X]', (event.oldRanking - event.newRanking).toString(10)),
+				fr: NOTIFICATIONS_FR.losing_points[random].replace('[X]', (event.oldRanking - event.newRanking).toString(10)),
+				en: NOTIFICATIONS_EN.losing_points[random].replace('[X]', (event.oldRanking - event.newRanking).toString(10)),
+				nl: NOTIFICATIONS_NL.losing_points[random].replace('[X]', (event.oldRanking - event.newRanking).toString(10)),
 			};
 		}
 

@@ -1,13 +1,5 @@
-import { TeamMatchDTO } from '../../../controllers/dto/team-match.dto';
+import { TeamMatchEventDTO } from '../../../controllers/dto/team-match-event-d-t.o';
 import { NumericRankingEventDto } from '../../../controllers/dto/numeric-ranking-event.dto';
-
-export interface MatchResultUpdate {
-	matchUniqueId: number;
-	updateTime: Date;
-}
-export interface LatestMatchUpdatePayload{
-	latestUpdates: MatchResultUpdate[];
-}
 
 export enum TabtEventType {
 	MATCH_RESULT_UPDATE = 'MATCH_RESULT_UPDATE',
@@ -21,4 +13,4 @@ export interface TabtEvent<T = TabtEventPayloadTypes> {
 	corrId: string;
 }
 
-export type TabtEventPayloadTypes = LatestMatchUpdatePayload | TeamMatchDTO | NumericRankingEventDto;
+export type TabtEventPayloadTypes =  TeamMatchEventDTO | NumericRankingEventDto;

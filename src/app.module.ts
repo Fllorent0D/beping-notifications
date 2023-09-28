@@ -6,7 +6,6 @@ import { LoggerModule } from 'nestjs-pino';
 import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from './controllers/health.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { MatchNotification } from './model/notification.entity';
 import { TeamMatchEventController } from './controllers/team-match-event.controller';
 import { CommonModule } from './common/common.module';
 import { AuthModule } from './auth/auth.module';
@@ -14,6 +13,7 @@ import { ApiConsumerEntity } from './model/api-consumer.entity';
 import { NumericRankingEventController } from './controllers/numeric-ranking-event.controller';
 import { NotificationsModule } from './notifications/notifications.module';
 import { NumericRankingNotificationEntity } from './model/numeric-ranking-notification.entity';
+import { TeamMatchNotificationEntity } from './model/team-match-notification.entity';
 
 @Module({
 	imports: [
@@ -42,7 +42,7 @@ import { NumericRankingNotificationEntity } from './model/numeric-ranking-notifi
 					username: configService.get('POSTGRES_USER'),
 					password: configService.get('POSTGRES_PASSWORD'),
 					database: configService.get('POSTGRES_DATABASE'),
-					entities: [MatchNotification, ApiConsumerEntity, NumericRankingNotificationEntity],
+					entities: [TeamMatchNotificationEntity, ApiConsumerEntity, NumericRankingNotificationEntity],
 					//entities: ['**/*.entity{.ts,.js}'],
 					//migrationsTableName: 'migration',
 					//migrations: ['src/migration/*.ts'],

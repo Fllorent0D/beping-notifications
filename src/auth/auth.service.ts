@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MatchNotification } from '../model/notification.entity';
 import { Repository } from 'typeorm';
 import { ApiConsumerEntity } from '../model/api-consumer.entity';
 import {createHash} from 'crypto';

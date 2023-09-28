@@ -2,7 +2,7 @@ import { Body, Controller, Post, UseGuards, UsePipes, ValidationPipe } from '@ne
 import { EventBusService } from '../common/event-bus/event-bus.service';
 import { TabtEventType } from '../common/event-bus/models/event.model';
 import { v4 as uuid } from 'uuid';
-import { TeamMatchDTO } from './dto/team-match.dto';
+import { TeamMatchEventDTO } from './dto/team-match-event-d-t.o';
 import { AuthGuard } from '@nestjs/passport';
 @Controller('event')
 export class TeamMatchEventController{
@@ -11,10 +11,10 @@ export class TeamMatchEventController{
 
 
 
-	@Post('team-match')
+	@Post('team-match-encoded')
 	@UseGuards(AuthGuard('basic'))
 	@UsePipes(new ValidationPipe({ transform: true }))
-	async teamMatchEvent(@Body() teamMatchEvent: TeamMatchDTO,) {
+	async teamMatchEvent(@Body() teamMatchEvent: TeamMatchEventDTO,) {
 		const corrId = uuid();
 
 		this.eventBusService.emitEvent({
