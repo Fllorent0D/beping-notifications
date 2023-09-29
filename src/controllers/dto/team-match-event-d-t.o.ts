@@ -122,34 +122,42 @@ export class TeamMatchEventDTO {
 	divisionId: number;
 
 	@ValidateNested()
+	@IsObject()
 	@Type(() => TeamMatchEventClub)
 	club: TeamMatchEventClub;
 
 	@ValidateNested()
+	@IsObject()
 	@Type(() => TeamMatchEventTeam)
 	team: TeamMatchEventTeam;
 
 	@ValidateNested()
+	@IsObject()
 	@Type(() => TeamMatchEventTeamName)
 	teamName: TeamMatchEventTeamName;
 
 	@ValidateNested()
+	@IsObject()
 	@Type(() => TeamMatchEventForfeited)
 	forfeited: TeamMatchEventForfeited;
 
 	@ValidateNested()
+	@IsObject()
 	@Type(() => TeamMatchEventWithdrawn)
 	withdrawn: TeamMatchEventWithdrawn;
 
 	@ValidateNested()
+	@IsObject()
 	@Type(() => TeamMatchEventScore)
 	score: TeamMatchEventScore;
 
 	@ValidateNested()
+	@IsObject()
 	@Type(() => TeamMatchEventPlayers)
 	players: TeamMatchEventPlayers
 
 	@ValidateNested()
+	@IsArray()
 	@Type(() => TeamMatchEventIndividualMatchResult)
 	individualMatchResults: TeamMatchEventIndividualMatchResult[];
 }
