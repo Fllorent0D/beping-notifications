@@ -73,20 +73,29 @@ export class NumericRankingNotifierService {
 
 	private getRandomNotificationText(event: NumericRankingEventDto) {
 		// random number between 0 and 10
-		const random = Math.floor(Math.random() * 10);
-		if (event.newRanking > event.oldRanking) {
-			return {
-				fr: NOTIFICATIONS_FR.winning_points[random].replace('[X]', (event.newRanking - event.oldRanking).toString(10)),
-				en: NOTIFICATIONS_EN.winning_points[random].replace('[X]', (event.newRanking - event.oldRanking).toString(10)),
-				nl: NOTIFICATIONS_NL.winning_points[random].replace('[X]', (event.newRanking - event.oldRanking).toString(10)),
-			};
+		// if date is the 1st of the month
+		const date = new Date();
+		if(date.getDate() === 1) {
+			const random = Math.floor(Math.random() * 10);
+			if (event.newRanking > event.oldRanking) {
+				return {
+					fr: NOTIFICATIONS_FR.winning_points[random].replace('[X]', (event.newRanking - event.oldRanking).toString(10)),
+					en: NOTIFICATIONS_EN.winning_points[random].replace('[X]', (event.newRanking - event.oldRanking).toString(10)),
+					nl: NOTIFICATIONS_NL.winning_points[random].replace('[X]', (event.newRanking - event.oldRanking).toString(10)),
+				};
+			} else {
+				return {
+					fr: NOTIFICATIONS_FR.losing_points[random].replace('[X]', (event.oldRanking - event.newRanking).toString(10)),
+					en: NOTIFICATIONS_EN.losing_points[random].replace('[X]', (event.oldRanking - event.newRanking).toString(10)),
+					nl: NOTIFICATIONS_NL.losing_points[random].replace('[X]', (event.oldRanking - event.newRanking).toString(10)),
+				};
+			}
 		} else {
 			return {
-				fr: NOTIFICATIONS_FR.losing_points[random].replace('[X]', (event.oldRanking - event.newRanking).toString(10)),
-				en: NOTIFICATIONS_EN.losing_points[random].replace('[X]', (event.oldRanking - event.newRanking).toString(10)),
-				nl: NOTIFICATIONS_NL.losing_points[random].replace('[X]', (event.oldRanking - event.newRanking).toString(10)),
-			};
+				fr: NOTIFICATIONS_FR.regularisation_points[0].replace('[X]', event.newRanking.toString(10)),
+				en: NOTIFICATIONS_EN.regularisation_points[0].replace('[X]', event.newRanking.toString(10)),
+				nl: NOTIFICATIONS_NL.regularisation_points[0].replace('[X]', event.newRanking.toString(10)),
+			}
 		}
-
 	}
 }

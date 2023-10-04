@@ -3,6 +3,7 @@ interface NotificationText {
 	losing_points: string[];
 	team_match_result: string[];
 	draw_match: string[];
+	regularisation_points: string[];
 }
 
 export const NOTIFICATIONS_FR: NotificationText = {
@@ -28,6 +29,9 @@ export const NOTIFICATIONS_FR: NotificationText = {
 		'Le jeu vous a fait une petite farce en vous retirant [X] points. Pas de panique, l\'avenir est rempli de possibilités ! 🌈',
 		'Même les légendes ont leurs moments difficiles. [X] points de moins aujourd\'hui, mais demain est un nouveau jour ! 🌄',
 		'Les points ont décidé de faire une pause, vous avez perdu [X]. Mais c\'est le moment idéal pour préparer votre retour triomphant ! 🚀',
+	],
+	"regularisation_points": [
+		"Régularisation en cours ! Des résultats du mois précédent viennent seulement d'être encodés. Vous avez maintenant [X] points ! 🔄🔢"
 	],
 	team_match_result: [
 		"[hometeam] a [result] contre [awayteam] avec un score de [homescore] à [awayscore]"
@@ -61,6 +65,9 @@ export const NOTIFICATIONS_EN: NotificationText = {
 		'Even legends have their tough moments. [X] points less today, but tomorrow is a new day! 🌄',
 		'Points decided to take a break; you\'ve lost [X]. But it\'s the perfect time to prepare for your triumphant comeback! 🚀',
 	],
+	regularisation_points: [
+		"Adjustment in progress! Results from the previous month have just been encoded. You now have [X] points! 🔄🔢"
+	],
 	team_match_result: [
 		"[hometeam] [result] against [awayteam] with a score of [homescore] to [awayscore]."
 	],
@@ -92,6 +99,9 @@ export const NOTIFICATIONS_NL: NotificationText = {
 		'Het spel heeft een klein grapje met je uitgehaald door [X] punten af ​​te nemen. Geen paniek; de toekomst zit vol mogelijkheden! 🌈',
 		'Zelfs legendes hebben hun moeilijke momenten. [X] punten minder vandaag, maar morgen is een nieuwe dag! 🌄',
 		'De punten hebben besloten om een pauze te nemen; je hebt [X] verloren. Maar het is het perfecte moment om je triomfantelijke comeback voor te bereiden! 🚀',
+	],
+	regularisation_points: [
+		"Aanpassing bezig! Resultaten van de vorige maand zijn zojuist ingevoerd. Je hebt nu [X] punten! 🔄🔢"
 	],
 	team_match_result: [
 		"[hometeam] heeft [result] van [awayteam] met een score van [homescore] tot [awayscore]."
