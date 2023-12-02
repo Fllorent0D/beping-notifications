@@ -75,7 +75,7 @@ export class NumericRankingNotifierService {
 		// random number between 0 and 10
 		// if date is the 1st of the month
 		const date = new Date();
-		if(date.getDate() === 1) {
+		if(date.getDate() === 1 || date.getDate() === 2) {
 			const random = Math.floor(Math.random() * 10);
 			if (event.newRanking > event.oldRanking) {
 				return {
