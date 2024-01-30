@@ -70,7 +70,7 @@ export class TeamMatchEventNotifierService {
 					});
 
 				} catch (err) {
-					this.logger.error(err.message, err.stack);
+					this.logger.error("Error while sending notifications", err);
 				}
 			});
 	}
