@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsBoolean, IsArray, ValidateNested, IsObject } from 'class-validator';
+import { IsString, IsNumber, IsBoolean, IsArray, ValidateNested, IsObject, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 
 class TeamMatchEventClub {
@@ -112,9 +112,9 @@ class TeamMatchEventPlayers {
 }
 
 export class TeamMatchEventDTO {
-	@IsString()
-	matchId: string;
-
+	@IsNumber()
+	MatchUniqueId: number;
+/*
 	@IsNumber()
 	weekName: number;
 
@@ -128,6 +128,7 @@ export class TeamMatchEventDTO {
 
 	@ValidateNested()
 	@IsObject()
+	@IsOptional()
 	@Type(() => TeamMatchEventTeam)
 	team: TeamMatchEventTeam;
 
@@ -160,4 +161,6 @@ export class TeamMatchEventDTO {
 	@IsArray()
 	@Type(() => TeamMatchEventIndividualMatchResult)
 	individualMatchResults: TeamMatchEventIndividualMatchResult[];
+
+ */
 }
