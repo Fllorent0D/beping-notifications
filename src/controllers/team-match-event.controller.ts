@@ -12,7 +12,7 @@ export class TeamMatchEventController{
 
 
 	@Post('team-match-encoded')
-	@UseGuards(AuthGuard('basic'))
+	//@UseGuards(AuthGuard('basic'))
 	@UsePipes(new ValidationPipe({ transform: true }))
 	async teamMatchEvent(@Body() teamMatchEvent: TeamMatchEventDTO,) {
 		const corrId = uuid();
