@@ -112,12 +112,12 @@ class TeamMatchEventPlayers {
 }
 
 export class TeamMatchEventDTO {
-	@IsNumber()
-	MatchUniqueId: number;
-/*
-	@IsNumber()
-	weekName: number;
+	@IsString()
+	MatchId: string;
 
+	@IsNumber()
+	WeekName: number;
+/*
 	@IsNumber()
 	divisionId: number;
 

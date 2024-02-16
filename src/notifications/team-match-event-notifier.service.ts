@@ -29,21 +29,44 @@ export class TeamMatchEventNotifierService {
 	listenEvents(): void {
 		this.tabtEventBusService
 			.ofTypes<TeamMatchEventDTO>(TabtEventType.MATCH_RESULT_RECEIVED)
-			.pipe(
-				map((event) => event.payload),
-				delay(1000 * 60 * 2)
-			).subscribe(async (eventDTO: TeamMatchEventDTO) => {
-				this.logger.log(eventDTO, 'Team match event received for ' + eventDTO.MatchUniqueId);
+			.pipe(map((event) => event.payload),
+				delay(1000 * 60 * 2))
+			.subscribe(async (eventDTO: TeamMatchEventDTO) => {
+				this.logger.log(eventDTO, 'Team match event received for ' + eventDTO.MatchId);
 				try {
 					const findNotifications = await this.matchNotificationRepository.findOne({
-						matchUniqueId: eventDTO.MatchUniqueId.toString(10),
+						matchUniqueId: eventDTO.MatchId,
 					});
 					if (findNotifications) {
-						this.logger.warn(`Match ${eventDTO.MatchUniqueId} already notified. Skipping...`);
+						this.logger.warn(`Match ${eventDTO.MatchId} already notified. Skipping...`);
 						return;
 					}
 
-					const { data: match } = await firstValueFrom(this.matchesService.findMatchById(eventDTO.MatchUniqueId));
+					const { data: matches } = await firstValueFrom(this.matchesService.findAllMatches(
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						null,
+						eventDTO.WeekName,
+						null,
+						null,
+						null,
+						null,
+						true,
+						eventDTO.MatchId,
+					));
+
+					if (matches.length === 0) {
+						this.logger.error(`Match ${eventDTO.MatchId} not found. Skipping...`);
+						return;
+					}
+
+					const match = matches[0];
 
 					if (
 						match.IsAwayForfeited ||
@@ -64,13 +87,13 @@ export class TeamMatchEventNotifierService {
 					const messageIds = await this.notifyMatch(match);
 					await this.matchNotificationRepository.insert({
 						createdAt: new Date(),
-						matchUniqueId: match.MatchUniqueId.toString(10),
+						matchUniqueId: match.MatchId,
 						messageIds: messageIds,
 						sent: true,
 					});
 
 				} catch (err) {
-					this.logger.error("Error while sending notifications", err);
+					this.logger.error('Error while sending notifications', err);
 				}
 			});
 	}
