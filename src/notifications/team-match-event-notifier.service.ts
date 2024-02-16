@@ -140,41 +140,41 @@ export class TeamMatchEventNotifierService {
 		) {
 			return {
 				fr: NOTIFICATIONS_FR.team_match_result[random]
-					.replace('[hometeam]', match.HomeTeam
-						.replace('[awayteam]', match.AwayTeam)
-						.replace('[result]', homeScore > awayScore ? 'gagné' : 'perdu')
-						.replace('[homescore]', homeScore.toString())
-						.replace('[awayscore]', awayScore.toString())),
+					.replace('[hometeam]', match.HomeTeam)
+					.replace('[awayteam]', match.AwayTeam)
+					.replace('[result]', homeScore > awayScore ? 'gagné' : 'perdu')
+					.replace('[homescore]', homeScore.toString())
+					.replace('[awayscore]', awayScore.toString()),
 				en: NOTIFICATIONS_EN.team_match_result[random]
-					.replace('[hometeam]', match.HomeTeam
-						.replace('[awayteam]', match.AwayTeam)
-						.replace('[result]', homeScore > awayScore ? 'win' : 'lost')
-						.replace('[homescore]', homeScore.toString())
-						.replace('[awayscore]', awayScore.toString())),
+					.replace('[hometeam]', match.HomeTeam)
+					.replace('[awayteam]', match.AwayTeam)
+					.replace('[result]', homeScore > awayScore ? 'win' : 'lost')
+					.replace('[homescore]', homeScore.toString())
+					.replace('[awayscore]', awayScore.toString()),
 				nl: NOTIFICATIONS_NL.team_match_result[random]
-					.replace('[hometeam]', match.HomeTeam
-						.replace('[awayteam]', match.AwayTeam)
-						.replace('[result]', homeScore > awayScore ? 'gewonnen' : 'verloren')
-						.replace('[homescore]', homeScore.toString())
-						.replace('[awayscore]', awayScore.toString())),
+					.replace('[hometeam]', match.HomeTeam)
+					.replace('[awayteam]', match.AwayTeam)
+					.replace('[result]', homeScore > awayScore ? 'gewonnen' : 'verloren')
+					.replace('[homescore]', homeScore.toString())
+					.replace('[awayscore]', awayScore.toString()),
 			};
 		} else {
 			return {
 				fr: NOTIFICATIONS_FR.draw_match[random]
-					.replace('[hometeam]', match.HomeTeam
-						.replace('[awayteam]', match.AwayTeam)
-						.replace('[homescore]', homeScore.toString())
-						.replace('[awayscore]', awayScore.toString())),
+					.replace('[hometeam]', match.HomeTeam)
+					.replace('[awayteam]', match.AwayTeam)
+					.replace('[homescore]', homeScore.toString())
+					.replace('[awayscore]', awayScore.toString()),
 				en: NOTIFICATIONS_EN.draw_match[random]
-					.replace('[hometeam]', match.HomeTeam
-						.replace('[awayteam]', match.AwayTeam)
-						.replace('[homescore]', homeScore.toString())
-						.replace('[awayscore]', awayScore.toString())),
+					.replace('[hometeam]', match.HomeTeam)
+					.replace('[awayteam]', match.AwayTeam)
+					.replace('[homescore]', homeScore.toString())
+					.replace('[awayscore]', awayScore.toString()),
 				nl: NOTIFICATIONS_NL.draw_match[random]
-					.replace('[hometeam]', match.HomeTeam
-						.replace('[awayteam]', match.AwayTeam)
-						.replace('[homescore]', homeScore.toString())
-						.replace('[awayscore]', awayScore.toString())),
+					.replace('[hometeam]', match.HomeTeam)
+					.replace('[awayteam]', match.AwayTeam)
+					.replace('[homescore]', homeScore.toString())
+					.replace('[awayscore]', awayScore.toString()),
 			};
 		}
 
